@@ -15,22 +15,21 @@ public class Trabalho {
 		System.out.println(diretorio);
 
 		Contrato[] contratos = new Contrato[contaLinhas(diretorio)];
-		
+
 		lerArquivo(diretorio, contratos);
-		
-		double matriz[][][] = new double[retornaMaior(contratos,tipo.Forn)+1][retornaMaior(contratos,
-				tipo.MesINICIO)+1][retornaMaior(contratos, tipo.MesFIM)+1];
+
+		double matriz[][][] = new double[retornaMaior(contratos, tipo.Forn) + 1][retornaMaior(contratos, tipo.MesINICIO)
+				+ 1][retornaMaior(contratos, tipo.MesFIM) + 1];
 
 		for (Contrato i : contratos) {
 			System.out.println(i.toString());
 			matriz[i.getFornecedor()][i.getMesInicio()][i.getMesFim()] = i.getValor();
 		}
-		System.out.println(retornaMaior(contratos, tipo.MesINICIO));
-		System.out.println(retornaMaior(contratos, tipo.MesFIM));
-		System.out.println(matriz[2][1][3]);
-		System.out.println(MaiorValorContrato(contratos));
+
+		System.out.println("Contrato com o menor valor: " + menorValorContrato(contratos));
 
 	}
+
 	private static void lerArquivo(String diretorio, Contrato[] contrato) throws FileNotFoundException {
 		Scanner in = new Scanner(new FileReader(diretorio));
 		String[] string = null;
@@ -81,16 +80,17 @@ public class Trabalho {
 					maiorValor = v.getMesFim();
 			}
 			break;
+
 		case Forn:
 			for (Contrato v : contratos) {
 				if (v.getFornecedor() > maiorValor) {
 					maiorValor = v.getFornecedor();
-			}
+				}
 			}
 			break;
 
 		default:
-			System.out.println("Parametro inv√°lido!");
+			System.out.println("Parametro inv·lido!");
 			break;
 		}
 
@@ -106,21 +106,16 @@ public class Trabalho {
 	}
 
 	enum tipo {
-		MesINICIO, MesFIM,Forn
+		MesINICIO, MesFIM, Forn
 	}
-	
-	private static double MaiorValorContrato(Contrato[] contratos) {
-		double maior = contratos[0].getValor();
-		for(int i = 1;i<contratos.length;i++) {
-			
-			if(contratos[i].getValor() > maior) {
-				maior = contratos[i].getValor();
-				
-			}
-			
-			
+
+	private static Contrato menorValorContrato(Contrato[] contratos) {
+		Contrato contrato = contratos[0];
+		for (Contrato i : contratos) {
+			if (i.getValor() < contrato.getValor())
+				contrato = i;
 		}
-		return maior;
+		return contrato;
 	}
 
 }
