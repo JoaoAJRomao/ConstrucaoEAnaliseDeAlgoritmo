@@ -27,7 +27,7 @@ public class Trabalho {
 		}
 
 		System.out.println("Contrato com o menor valor: " + menorValorContrato(contratos));
-
+		System.out.println("Contrato com o menor valor: " + menorValorContrato(matriz));
 	}
 
 	private static void lerArquivo(String diretorio, Contrato[] contrato) throws FileNotFoundException {
@@ -118,4 +118,14 @@ public class Trabalho {
 		return contrato;
 	}
 
+	private static String menorValorContrato(double[][][] matriz) {
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				for (int k = 0; k < matriz[i][j].length; k++) {
+					
+				}
+			}
+		}
+		return null;
+	}
 }
