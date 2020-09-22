@@ -17,14 +17,29 @@ public class Trabalho {
 
 		lerArquivo(diretorio, contratos);
 
-		double matriz[][][] = new double[contaLinhas(diretorio)][retornaMaiorMes(contratos,
-				tipoMes.INICIO)][retornaMaiorMes(contratos, tipoMes.FIM)];
+		double matriz[][][] = new double[contaLinhas(diretorio)]
+										[retornaMaiorMes(contratos, tipoMes.INICIO)]
+										[retornaMaiorMes(contratos, tipoMes.FIM)];
 
 		for (Contrato i : contratos) {
 			matriz[i.getFornecedor() - 1][i.getMesInicio() - 1][i.getMesFim() - 1] = i.getValor();
 		}
 
-		System.out.println("Contrato com menor valor de mercado: " + retornaContratoDeMenorValor(contratos));
+		System.out.println("Contrato com menor valor de mercado (vetor): " + retornaContratoDeMenorValor(contratos));
+		
+//		imprimirMatriz(matriz);
+	}
+
+	private static void imprimirMatriz(double[][][] matriz) {
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				for (int k = 0; k < matriz[i][j].length; k++) {
+					System.out.printf("%.1f\t",matriz[i][j][k]);
+				}
+				System.out.println();
+			}
+		}
+
 	}
 
 	private static Contrato retornaContratoDeMenorValor(Contrato[] contratos) {
