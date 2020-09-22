@@ -14,18 +14,26 @@ public class Trabalho {
 		System.out.println(diretorio);
 
 		Contrato[] contratos = new Contrato[contaLinhas(diretorio)];
-		
+
 		lerArquivo(diretorio, contratos);
-		
+
 		double matriz[][][] = new double[contaLinhas(diretorio)][retornaMaiorMes(contratos,
 				tipoMes.INICIO)][retornaMaiorMes(contratos, tipoMes.FIM)];
 
 		for (Contrato i : contratos) {
-			System.out.println(i.toString());
 			matriz[i.getFornecedor() - 1][i.getMesInicio() - 1][i.getMesFim() - 1] = i.getValor();
 		}
-		System.out.println(retornaMaiorMes(contratos, tipoMes.INICIO));
-		System.out.println(retornaMaiorMes(contratos, tipoMes.FIM));
+
+		System.out.println("Contrato com menor valor de mercado: " + retornaContratoDeMenorValor(contratos));
+	}
+
+	private static Contrato retornaContratoDeMenorValor(Contrato[] contratos) {
+		Contrato maisBarato = contratos[0];
+		for (Contrato c : contratos) {
+			if (c.getValor() < maisBarato.getValor())
+				maisBarato = c;
+		}
+		return maisBarato;
 	}
 
 	private static void lerArquivo(String diretorio, Contrato[] contrato) throws FileNotFoundException {
