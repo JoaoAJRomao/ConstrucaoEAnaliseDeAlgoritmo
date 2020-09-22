@@ -28,7 +28,7 @@ public class Trabalho {
 		System.out.println(retornaMaior(contratos, tipo.MesINICIO));
 		System.out.println(retornaMaior(contratos, tipo.MesFIM));
 		System.out.println(matriz[2][1][3]);
-		System.out.println(MaiorValorContrato(contratos));
+		System.out.println(MenorValorContratoV(contratos));
 
 	}
 	private static void lerArquivo(String diretorio, Contrato[] contrato) throws FileNotFoundException {
@@ -109,18 +109,23 @@ public class Trabalho {
 		MesINICIO, MesFIM,Forn
 	}
 	
-	private static double MaiorValorContrato(Contrato[] contratos) {
-		double maior = contratos[0].getValor();
+	private static double MenorValorContratoV(Contrato[] contratos) {
+		double menor = contratos[0].getValor();
 		for(int i = 1;i<contratos.length;i++) {
 			
-			if(contratos[i].getValor() > maior) {
-				maior = contratos[i].getValor();
+			if(contratos[i].getValor() < menor) {
+				menor = contratos[i].getValor();
 				
 			}
 			
 			
 		}
-		return maior;
+		return menor;
+	}
+	private static double MenorValorContratoM(double matriz[][][]) {
+		return 0;
+		
 	}
 
 }
+
