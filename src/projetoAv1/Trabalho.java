@@ -9,6 +9,7 @@ import java.io.LineNumberReader;
 import java.util.Scanner;
 
 public class Trabalho {
+
 	public static void main(String[] args) throws IOException {
 		String diretorio = System.getProperty("user.dir") + "\\ProjetoUm.txt";
 		System.out.println(diretorio);
@@ -17,38 +18,17 @@ public class Trabalho {
 
 		lerArquivo(diretorio, contratos);
 
-		double matriz[][][] = new double[contaLinhas(diretorio)]
-										[retornaMaiorMes(contratos, tipoMes.INICIO)]
-										[retornaMaiorMes(contratos, tipoMes.FIM)];
+		double matriz[][][] = new double[retornaMaiorMes(contratos, tipo.Forn)
+				+ 1][retornaMaiorMes(contratos, tipo.INICIO) + 1][retornaMaiorMes(contratos, tipo.FIM) + 1];
 
 		for (Contrato i : contratos) {
-			matriz[i.getFornecedor() - 1][i.getMesInicio() - 1][i.getMesFim() - 1] = i.getValor();
+			System.out.println(i.toString());
+			matriz[i.getFornecedor()][i.getMesInicio()][i.getMesFim()] = i.getValor();
 		}
+		System.out.println(retornaMaiorMes(contratos, tipo.INICIO));
+		System.out.println(retornaMaiorMes(contratos, tipo.FIM));
+		System.out.println(matriz[1][1][2]);
 
-		System.out.println("Contrato com menor valor de mercado (vetor): " + retornaContratoDeMenorValor(contratos));
-		
-//		imprimirMatriz(matriz);
-	}
-
-	private static void imprimirMatriz(double[][][] matriz) {
-		for (int i = 0; i < matriz.length; i++) {
-			for (int j = 0; j < matriz[i].length; j++) {
-				for (int k = 0; k < matriz[i][j].length; k++) {
-					System.out.printf("%.1f\t",matriz[i][j][k]);
-				}
-				System.out.println();
-			}
-		}
-
-	}
-
-	private static Contrato retornaContratoDeMenorValor(Contrato[] contratos) {
-		Contrato maisBarato = contratos[0];
-		for (Contrato c : contratos) {
-			if (c.getValor() < maisBarato.getValor())
-				maisBarato = c;
-		}
-		return maisBarato;
 	}
 
 	private static void lerArquivo(String diretorio, Contrato[] contrato) throws FileNotFoundException {
@@ -85,7 +65,7 @@ public class Trabalho {
 	 * @param tipo
 	 * @return
 	 */
-	private static int retornaMaiorMes(Contrato[] contratos, tipoMes tipo) {
+	private static int retornaMaiorMes(Contrato[] contratos, tipo tipo) {
 		int maiorValor = 0;
 		switch (tipo) {
 		case INICIO:
@@ -101,9 +81,16 @@ public class Trabalho {
 					maiorValor = v.getMesFim();
 			}
 			break;
+		case Forn:
+			for (Contrato v : contratos) {
+				if (v.getFornecedor() > maiorValor) {
+					maiorValor = v.getFornecedor();
+				}
+			}
+			break;
 
 		default:
-			System.out.println("Parametro inv·lido!");
+			System.out.println("Parametro inv√°lido!");
 			break;
 		}
 
@@ -118,7 +105,8 @@ public class Trabalho {
 		return Double.parseDouble(string);
 	}
 
-	enum tipoMes {
-		INICIO, FIM
+	enum tipo {
+		INICIO, FIM, Forn
 	}
+
 }
