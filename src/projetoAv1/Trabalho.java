@@ -25,8 +25,8 @@ public class Trabalho {
 
 		substituiValoresNaMatriz(contratos, matriz);
 
-		System.out.println("Contrato com o menor valor: " + menorValorContratoV(contratos));
-		System.out.println("Contrato com o menor valor: " + menorValorContratoM(matriz));
+		System.out.println("Contrato com o menor valor: " + menorValorContratoV(contratos)); //item B
+		System.out.println("Contrato com o menor valor: " + menorValorContratoM(matriz)); // item C
 		System.out.println(menorValorContratoIndividualCompleto(matriz, 3)); // item D
 		System.out.println(menorValorContratoIndividualIF(matriz, 2)); // item E
 	}
@@ -138,7 +138,7 @@ public class Trabalho {
 	private static String menorValorContratoM(double[][][] matriz) {
 		double menorValor = matriz[0][0][0];
 		int fornecedor = 0, mesInicio = 0, mesFinal = 0;
-		for (int i = 0; i < matriz.length; i++) {
+		for (int i = 1; i < matriz.length; i++) {
 			for (int j = 0; j < matriz[i].length; j++) {
 				for (int k = 0; k < matriz[i][j].length; k++) {
 					if (matriz[i][j][k] < menorValor) {
@@ -159,7 +159,7 @@ public class Trabalho {
 		int j = 1;
 		int k = m;
 		int fornecedor = 0, mesInicio = 0, mesFinal = 0;
-		for (int i = 0; i < matriz.length; i++) {
+		for (int i = 1; i < matriz.length; i++) {
 			if (matriz[i][j][k] < menorValor) {
 				menorValor = matriz[i][j][k];
 				fornecedor = i;
@@ -176,7 +176,7 @@ public class Trabalho {
 		double menorValor = matriz[0][0][0];
 		int j = m;
 		int fornecedor = 0, mesInicio = 0, mesFinal = 0;
-		for (int i = 0; i < matriz.length; i++) {
+		for (int i = 1; i < matriz.length; i++) {
 			for (int k = 0; k < matriz[i][j].length; k++) {
 				if (matriz[i][j][k] < menorValor) {
 					menorValor = matriz[i][j][k];
