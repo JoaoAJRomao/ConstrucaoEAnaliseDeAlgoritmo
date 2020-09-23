@@ -15,22 +15,38 @@ public class Trabalho {
 		System.out.println(diretorio);
 
 		Contrato[] contratos = new Contrato[contaLinhas(diretorio)];
-		
-		lerArquivo(diretorio, contratos);
-		
-		double matriz[][][] = new double[retornaMaior(contratos,tipo.Forn)+1][retornaMaior(contratos,
-				tipo.MesINICIO)+1][retornaMaior(contratos, tipo.MesFIM)+1];
 
+		lerArquivo(diretorio, contratos);
+
+		double matriz[][][] = new double[retornaMaior(contratos, tipo.Forn) + 1][retornaMaior(contratos, tipo.MesINICIO)
+				+ 1][retornaMaior(contratos, tipo.MesFIM) + 1];
+
+		preencheMatrizComValorMaximo(matriz);
+
+		substituiValoresNaMatriz(contratos, matriz);
+
+		System.out.println("Contrato com o menor valor: " + menorValorContratoV(contratos));
+		System.out.println("Contrato com o menor valor: " + menorValorContratoM(matriz));
+		System.out.println(menorValorContratoIndividualCompleto(matriz,3)); // item D
+		System.out.println(menorValorContratoIndividualIF(matriz,2));  // item E
+	}
+
+	private static void substituiValoresNaMatriz(Contrato[] contratos, double[][][] matriz) {
 		for (Contrato i : contratos) {
-			System.out.println(i.toString());
 			matriz[i.getFornecedor()][i.getMesInicio()][i.getMesFim()] = i.getValor();
 		}
-		System.out.println(retornaMaior(contratos, tipo.MesINICIO));
-		System.out.println(retornaMaior(contratos, tipo.MesFIM));
-		System.out.println(matriz[2][1][3]);
-		System.out.println(MenorValorContratoV(contratos));
-
 	}
+
+	private static void preencheMatrizComValorMaximo(double[][][] matriz) {
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				for (int k = 0; k < matriz[i][j].length; k++) {
+					matriz[i][j][k] = Double.MAX_VALUE;
+				}
+			}
+		}
+	}
+
 	private static void lerArquivo(String diretorio, Contrato[] contrato) throws FileNotFoundException {
 		Scanner in = new Scanner(new FileReader(diretorio));
 		String[] string = null;
@@ -81,11 +97,12 @@ public class Trabalho {
 					maiorValor = v.getMesFim();
 			}
 			break;
+
 		case Forn:
 			for (Contrato v : contratos) {
 				if (v.getFornecedor() > maiorValor) {
 					maiorValor = v.getFornecedor();
-			}
+				}
 			}
 			break;
 
@@ -106,26 +123,69 @@ public class Trabalho {
 	}
 
 	enum tipo {
-		MesINICIO, MesFIM,Forn
-	}
-	
-	private static double MenorValorContratoV(Contrato[] contratos) {
-		double menor = contratos[0].getValor();
-		for(int i = 1;i<contratos.length;i++) {
-			
-			if(contratos[i].getValor() < menor) {
-				menor = contratos[i].getValor();
-				
-			}
-			
-			
-		}
-		return menor;
-	}
-	private static double MenorValorContratoM(double matriz[][][]) {
-		return 0;
-		
+		MesINICIO, MesFIM, Forn
 	}
 
+	private static Contrato menorValorContratoV(Contrato[] contratos) {
+		Contrato contrato = contratos[0];
+		for (Contrato i : contratos) {
+			if (i.getValor() < contrato.getValor())
+				contrato = i;
+		}
+		return contrato;
+	}
+
+	private static String menorValorContratoM(double[][][] matriz) {
+		double menorValor = matriz[0][0][0];
+		int fornecedor = 0, mesInicio = 0, mesFinal = 0;
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				for (int k = 0; k < matriz[i][j].length; k++) {
+					if (matriz[i][j][k] < menorValor) {
+						menorValor = matriz[i][j][k];
+						fornecedor = i;
+						mesInicio = j;
+						mesFinal = k;
+					}
+				}
+			}
+		}
+		return "Contrato [fornecedor=" + fornecedor + ", mesInicio=" + mesInicio + ", mesFim=" + mesFinal + ", valor="
+				+ menorValor + "]";
+	}
+	private static String menorValorContratoIndividualCompleto(double[][][]matriz,int m) {
+		double menorValor = matriz[0][0][0];
+		int j = 1;
+		int k = m;
+		int fornecedor = 0, mesInicio = 0, mesFinal = 0;
+		for(int i = 0;i<matriz.length;i++) {
+			if(matriz[i][j][k] < menorValor) {
+				menorValor = matriz[i][j][k];
+				fornecedor = i;
+				mesInicio = j;
+				mesFinal = k;
+			}
+			
+		}
+		return "Contrato [fornecedor=" + fornecedor + ", mesInicio=" + mesInicio + ", mesFim=" + mesFinal + ", valor="
+		+ menorValor + "]";
+	}
+	private static String menorValorContratoIndividualIF(double[][][]matriz,int m) {
+		double menorValor = matriz[0][0][0];
+		int j = m;
+		int fornecedor = 0, mesInicio = 0, mesFinal = 0;
+		for(int i = 0;i<matriz.length;i++) {
+			for(int k = 0;k<matriz[i][j].length;k++) {
+			if(matriz[i][j][k] < menorValor) {
+				menorValor = matriz[i][j][k];
+				fornecedor = i;
+				mesInicio = j;
+				mesFinal = k;
+			}
+			}
+		}
+		return "Contrato [fornecedor=" + fornecedor + ", mesInicio=" + mesInicio + ", mesFim=" + mesFinal + ", valor="
+		+ menorValor + "]";
+	}
 }
 
