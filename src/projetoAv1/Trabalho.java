@@ -21,13 +21,28 @@ public class Trabalho {
 		double matriz[][][] = new double[retornaMaior(contratos, tipo.Forn) + 1][retornaMaior(contratos, tipo.MesINICIO)
 				+ 1][retornaMaior(contratos, tipo.MesFIM) + 1];
 
-		for (Contrato i : contratos) {
-			System.out.println(i.toString());
-			matriz[i.getFornecedor()][i.getMesInicio()][i.getMesFim()] = i.getValor();
-		}
+		preencheMatrizComValorMaximo(matriz);
+
+		substituiValoresNaMatriz(contratos, matriz);
 
 		System.out.println("Contrato com o menor valor: " + menorValorContrato(contratos));
 		System.out.println("Contrato com o menor valor: " + menorValorContrato(matriz));
+	}
+
+	private static void substituiValoresNaMatriz(Contrato[] contratos, double[][][] matriz) {
+		for (Contrato i : contratos) {
+			matriz[i.getFornecedor()][i.getMesInicio()][i.getMesFim()] = i.getValor();
+		}
+	}
+
+	private static void preencheMatrizComValorMaximo(double[][][] matriz) {
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				for (int k = 0; k < matriz[i][j].length; k++) {
+					matriz[i][j][k] = Double.MAX_VALUE;
+				}
+			}
+		}
 	}
 
 	private static void lerArquivo(String diretorio, Contrato[] contrato) throws FileNotFoundException {
@@ -119,13 +134,21 @@ public class Trabalho {
 	}
 
 	private static String menorValorContrato(double[][][] matriz) {
+		double menorValor = matriz[0][0][0];
+		int fornecedor = 0, mesInicio = 0, mesFinal = 0;
 		for (int i = 0; i < matriz.length; i++) {
 			for (int j = 0; j < matriz[i].length; j++) {
 				for (int k = 0; k < matriz[i][j].length; k++) {
-					
+					if (matriz[i][j][k] < menorValor) {
+						menorValor = matriz[i][j][k];
+						fornecedor = i;
+						mesInicio = j;
+						mesFinal = k;
+					}
 				}
 			}
 		}
-		return null;
+		return "Contrato [fornecedor=" + fornecedor + ", mesInicio=" + mesInicio + ", mesFim=" + mesFinal + ", valor="
+				+ menorValor + "]";
 	}
 }
