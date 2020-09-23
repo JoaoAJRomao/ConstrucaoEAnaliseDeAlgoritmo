@@ -27,8 +27,8 @@ public class Trabalho {
 
 		System.out.println("Contrato com o menor valor: " + menorValorContratoV(contratos));
 		System.out.println("Contrato com o menor valor: " + menorValorContratoM(matriz));
-		System.out.println(menorValorContratoIndividualCompleto(matriz,3)); // item D
-		System.out.println(menorValorContratoIndividualIF(matriz,2));  // item E
+		System.out.println(menorValorContratoIndividualCompleto(matriz, 3)); // item D
+		System.out.println(menorValorContratoIndividualIF(matriz, 2)); // item E
 	}
 
 	private static void substituiValoresNaMatriz(Contrato[] contratos, double[][][] matriz) {
@@ -153,39 +153,40 @@ public class Trabalho {
 		return "Contrato [fornecedor=" + fornecedor + ", mesInicio=" + mesInicio + ", mesFim=" + mesFinal + ", valor="
 				+ menorValor + "]";
 	}
-	private static String menorValorContratoIndividualCompleto(double[][][]matriz,int m) {
+
+	private static String menorValorContratoIndividualCompleto(double[][][] matriz, int m) {
 		double menorValor = matriz[0][0][0];
 		int j = 1;
 		int k = m;
 		int fornecedor = 0, mesInicio = 0, mesFinal = 0;
-		for(int i = 0;i<matriz.length;i++) {
-			if(matriz[i][j][k] < menorValor) {
+		for (int i = 0; i < matriz.length; i++) {
+			if (matriz[i][j][k] < menorValor) {
 				menorValor = matriz[i][j][k];
 				fornecedor = i;
 				mesInicio = j;
 				mesFinal = k;
 			}
-			
+
 		}
 		return "Contrato [fornecedor=" + fornecedor + ", mesInicio=" + mesInicio + ", mesFim=" + mesFinal + ", valor="
-		+ menorValor + "]";
+				+ menorValor + "]";
 	}
-	private static String menorValorContratoIndividualIF(double[][][]matriz,int m) {
+
+	private static String menorValorContratoIndividualIF(double[][][] matriz, int m) {
 		double menorValor = matriz[0][0][0];
 		int j = m;
 		int fornecedor = 0, mesInicio = 0, mesFinal = 0;
-		for(int i = 0;i<matriz.length;i++) {
-			for(int k = 0;k<matriz[i][j].length;k++) {
-			if(matriz[i][j][k] < menorValor) {
-				menorValor = matriz[i][j][k];
-				fornecedor = i;
-				mesInicio = j;
-				mesFinal = k;
-			}
+		for (int i = 0; i < matriz.length; i++) {
+			for (int k = 0; k < matriz[i][j].length; k++) {
+				if (matriz[i][j][k] < menorValor) {
+					menorValor = matriz[i][j][k];
+					fornecedor = i;
+					mesInicio = j;
+					mesFinal = k;
+				}
 			}
 		}
 		return "Contrato [fornecedor=" + fornecedor + ", mesInicio=" + mesInicio + ", mesFim=" + mesFinal + ", valor="
-		+ menorValor + "]";
+				+ menorValor + "]";
 	}
 }
-
