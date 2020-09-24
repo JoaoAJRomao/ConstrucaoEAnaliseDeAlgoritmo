@@ -66,10 +66,6 @@ public class Trabalho {
 		return Double.parseDouble(string);
 	}
 
-	enum tipo {
-		MesINICIO, MesFIM, Forn
-	}
-
 	private static Contrato menorValorContratoV(Contrato[] contratos) {
 		Contrato contrato = contratos[0];
 		for (Contrato i : contratos) {
